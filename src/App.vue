@@ -12,6 +12,11 @@
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-toolbar-title>Application</v-toolbar-title>
+      <v-spacer>
+      </v-spacer>
+      <v-btn @click="toggleTheme" icon>
+      <v-icon> {{ $vuetify.theme.dark ? 'mdi-white-balance-sunny' : 'mdi-weather-night' }} </v-icon>
+    </v-btn>
     </v-app-bar>
 
     <v-main>
@@ -29,7 +34,9 @@ export default {
   components: {
   },
   methods: {
-    
+    toggleTheme(){
+      this.$vuetify.theme.dark = !this.$vuetify.theme.dark
+    }
   
   },
 
