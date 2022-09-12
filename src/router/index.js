@@ -5,6 +5,7 @@ import RegisterView from '../views/RegisterView.vue'
 import LoginView from '../views/LoginView.vue'
 import NotFoundView from '../views/NotFoundView.vue'
 import UserView from '../views/UserView.vue'
+import ChartView from '../views/ChartView.vue'
 
 Vue.use(VueRouter)
 
@@ -43,6 +44,14 @@ const routes = [
     component:UserView,
     meta:{reqAuth:true},
     props:true
+  },
+  {
+    path:'/chart/:coin',
+    name:'chart',
+    component:ChartView,
+    meta:{reqAuth:true},
+    props:true,
+  
   },
   {
     path:'/:catchAll(.*)',

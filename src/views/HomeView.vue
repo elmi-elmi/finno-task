@@ -34,6 +34,16 @@
               {{ item.usd}} 
             </div>
           </template>
+          <template v-slot:item.name="{ item }">
+            <router-link :to="{name:'chart', params:{coin:item.name}}" target="_blank">
+              <v-btn text >
+             
+             <v-icon  left>mdi-{{item.name}} </v-icon>
+               <span>{{ item.name}} </span>
+             </v-btn>
+            </router-link>
+            
+          </template>
         </v-data-table>
       </v-card>
     </v-col>
