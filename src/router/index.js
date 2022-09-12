@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import LoginView from '../views/LoginView.vue'
+import NotFoundView from '../views/NotFoundView.vue'
 
 Vue.use(VueRouter)
 
@@ -32,6 +33,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue'),
     meta:{reqAuth:true}
 
+  },
+  {
+    path:'/:catchAll(.*)',
+    name:'notFound',
+    component:NotFoundView
   }
 ]
 
@@ -39,7 +45,9 @@ const router = new VueRouter({
   routes
 })
 router.beforeEach((to, from, next)=>{
-  if(to.matched.some(record=>record.meta.reqAuth)) next('/login')
+  const loggedIn = localStorage.getItem('user')
+  console.log('router loggedin: ', loggedIn)
+  if(to.matched.some(record=>record.meta.reqAuth) && !loggedIn) next('/login')
   next()
 })
 

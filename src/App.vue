@@ -15,12 +15,17 @@
       <v-spacer>
       </v-spacer>
       <v-btn @click="toggleTheme" icon>
-      <v-icon> {{ $vuetify.theme.dark ? 'mdi-white-balance-sunny' : 'mdi-weather-night' }} </v-icon>
-    </v-btn>
+         <v-icon> {{ $vuetify.theme.dark ? 'mdi-white-balance-sunny' : 'mdi-weather-night' }} </v-icon>
+      </v-btn>
+      <v-btn @click="logout" icon>
+        <v-icon>mdi-logout</v-icon>
+      </v-btn>
     </v-app-bar>
 
-    <v-main>
-      <router-view/>
+    <v-main >
+      <transition name="fade" mode="out-in">
+        <router-view></router-view>
+      </transition>
     </v-main>
 
   </v-app>
@@ -36,6 +41,9 @@ export default {
   methods: {
     toggleTheme(){
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark
+    },
+    logout(){
+      this.$store.dispatch('doLogout')
     }
   
   },

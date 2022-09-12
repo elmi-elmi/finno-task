@@ -3,6 +3,8 @@
     <v-row justify="center">
       <v-col class="d-flex flex-column justify-center align-center">
         <form>
+            <h1 class="grey--text">Register</h1>
+
           <v-text-field
             v-model="name"
             prepend-icon="mdi-account-circle"
@@ -99,7 +101,7 @@ export default {
     email: "",
     checkbox: false,
     password: null,
-    captcha: false,
+    captcha: true,
   }),
 
   computed: {
@@ -137,6 +139,17 @@ export default {
   methods: {
     submit() {
       this.$v.$touch();
+      this.$store
+      .dispatch('doRegister',
+      {
+        email:this.email,
+        password:this.password
+      }
+      )
+      .then(()=>this.$router.push('/about'))
+      .catch(()=>{
+        
+      })
     },
     clear() {
       this.$v.$reset();

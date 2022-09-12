@@ -2,7 +2,8 @@
   <v-container>
     <v-row justify="center">
       <v-col class="d-flex flex-column justify-center align-center">
-        <form>
+          <form>
+            <h1 class="grey--text">Login</h1>
           
           <v-text-field
             v-model="email"
@@ -69,7 +70,7 @@ export default {
   data: () => ({
     email: "",
     password: null,
-    captcha:false
+    captcha:true
   }),
 
   computed: {
@@ -105,15 +106,26 @@ export default {
   },
 
   methods: {
+    
     submit() {
       this.$v.$touch();
+      this.$store
+      .dispatch('doLogin',
+      {
+        email:this.email,
+        password:this.password
+      }
+      )
+      .then(()=>this.$router.push('/about'))
+      .catch(()=>{
+        
+      })
     },
     clear() {
       this.$v.$reset();
       this.name = "";
       this.password = null;
       this.email = "";
-      this.select = null;
       this.checkbox = false;
     },
     verify(response) {
