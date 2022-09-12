@@ -13,7 +13,7 @@
             hide-details
           ></v-text-field>
         </v-card-title>
-        <v-data-table :headers="headers" :items="desserts" :search="search">
+        <v-data-table :loading="isLoading" :headers="headers" :items="desserts" :search="search">
           <template v-slot:item.usd_24h_change="{ item }">
             <div
               :class="{
@@ -22,6 +22,16 @@
               }"
             >
               {{ item.usd_24h_change.toFixed(2) }} %
+            </div>
+          </template>
+          <template v-slot:item.usd="{ item }">
+            <div
+              :class="{
+                'green--text': item.usd_24h_change >= 0,
+                'red--text': item.usd_24h_change < 0,
+              }"
+            >
+              {{ item.usd}} 
             </div>
           </template>
         </v-data-table>
@@ -50,6 +60,7 @@ export default {
             usd_24h_vol: (this.rawData[i].usd_24h_vol / 1000000).toFixed(2),
           });
         }
+        this.isLoading = false;
       });
     },
   },
@@ -57,6 +68,7 @@ export default {
   data() {
     return {
       search: "",
+      isLoading:true,
       rawData: null,
       headers: [
         {

@@ -18,5 +18,9 @@ export default {
   },
   saveAuthHeader(token){
     apiClient.defaults.headers.common['Authorization'] = `Bearer ${token}`
+  },
+  users(){
+    console.log('================')
+    return apiClient.get('/users')
   }
 };

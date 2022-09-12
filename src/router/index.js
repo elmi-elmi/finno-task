@@ -4,6 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import LoginView from '../views/LoginView.vue'
 import NotFoundView from '../views/NotFoundView.vue'
+import UserView from '../views/UserView.vue'
 
 Vue.use(VueRouter)
 
@@ -40,6 +41,13 @@ const routes = [
     path:'/:catchAll(.*)',
     name:'notFound',
     component:NotFoundView
+  },
+  {
+    path:'/user/:id',
+    name:'user',
+    component:UserView,
+    meta:{reqAuth:true},
+    props:true
   }
 ]
 
