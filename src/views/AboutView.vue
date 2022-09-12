@@ -1,10 +1,34 @@
 <template>
-  <div class="about" >
-    <ul v-for="(user, i) in users" :key="user.id">
-      <router-link :to="{name:'user', params:{user, id:user.id}}">{{user.first_name}}</router-link>
- 
-    </ul>
-  </div>
+  <v-row class=" mt-2">
+    <v-col class="d-flex justify-center aling-center">
+        <v-card min-width="600">
+    <v-list three-line>
+      <template v-for="(item, index) in users" :kry="item.id" >
+        <v-subheader
+          v-if="index===0"
+          :key="header"
+          v-text="header"
+        ></v-subheader>
+        <v-divider v-if="index!==0"
+        ></v-divider>
+        <v-list-item
+        router
+        :to="{name:'user', params:{user:item, id:item.id}}"
+        >
+          <v-list-item-avatar>
+            <v-img :src="item.avatar"></v-img>
+          </v-list-item-avatar>
+
+          <v-list-item-content>
+            <v-list-item-title v-html="item.last_name + ' ' + item.first_name"></v-list-item-title>
+            <v-list-item-subtitle v-html="item.email"></v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+      </template>
+    </v-list>
+  </v-card>
+  </v-col>
+  </v-row>
 </template>
 
 <script>
@@ -12,7 +36,7 @@
 export default{
   name:'Users',
   components:{UserInfo},
-  data(){return{users:{}}},
+  data(){return{users:{},header:'Users'}},
   created(){
       this.fetchUsers();
   },
