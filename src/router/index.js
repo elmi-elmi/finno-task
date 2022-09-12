@@ -17,12 +17,14 @@ const routes = [
   {
     path: '/register',
     name: 'register',
-    component: RegisterView
+    component: RegisterView,
+    
   },
   {
     path: '/login',
     name: 'login',
-    component: LoginView
+    component: LoginView,
+    
   },
   {
     path: '/about',
@@ -46,8 +48,8 @@ const router = new VueRouter({
 })
 router.beforeEach((to, from, next)=>{
   const loggedIn = localStorage.getItem('user')
-  console.log('router loggedin: ', loggedIn)
-  if(to.matched.some(record=>record.meta.reqAuth) && !loggedIn) next('/login')
+  if(to.meta.reqAuth && !loggedIn) next('/login')
+  if((to.fullPath === '/login' || to.fullPath === '/register') && loggedIn) next('/')
   next()
 })
 

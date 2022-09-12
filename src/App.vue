@@ -17,8 +17,10 @@
       <v-btn @click="toggleTheme" icon>
          <v-icon> {{ $vuetify.theme.dark ? 'mdi-white-balance-sunny' : 'mdi-weather-night' }} </v-icon>
       </v-btn>
-      <v-btn @click="logout" icon>
-        <v-icon>mdi-logout</v-icon>
+      <v-btn @click="logoutOrIn" icon>
+        <v-icon>
+        {{$store.getters['userLoggedIn'] ? 'mdi-logout': 'mdi-login'}}
+         </v-icon>
       </v-btn>
     </v-app-bar>
 
@@ -42,8 +44,9 @@ export default {
     toggleTheme(){
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark
     },
-    logout(){
-      this.$store.dispatch('doLogout')
+    logoutOrIn(){
+      if(this.$store.getters['userLoggedIn']) this.$store.dispatch('doLogout')
+      else this.$router.push('/login')
     }
   
   },
