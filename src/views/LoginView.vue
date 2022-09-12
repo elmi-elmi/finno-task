@@ -32,7 +32,7 @@
               @expired="expired"
             ></vue-recaptcha>
           </v-card>
-          <v-btn class="mr-4" @click="submit"> Login </v-btn>
+          <v-btn :disabled="$v.$invalid ||!captcha" class="mr-4" @click="submit"> Login </v-btn>
           <v-btn @click="clear"> clear </v-btn>
         </form>
         <v-row class="ma-4"> <span>Don't you have an account? &nbsp;</span>
@@ -50,7 +50,6 @@ import VueRecaptcha from "vue-recaptcha";
 import { validationMixin } from "vuelidate";
 import {
   required,
-  maxLength,
   email,
   minLength,
 } from "vuelidate/lib/validators";
@@ -63,22 +62,14 @@ export default {
   },
 
   validations: {
-    name: { required, maxLength: maxLength(10) },
     password: { required, minLength: minLength(4) },
     email: { required, email },
-    checkbox: {
-      checked(val) {
-        return val;
-      },
-    },
   },
 
   data: () => ({
-    name: "",
     email: "",
-    select: null,
-    checkbox: false,
     password: null,
+    captcha:false
   }),
 
   computed: {
@@ -125,10 +116,12 @@ export default {
       this.select = null;
       this.checkbox = false;
     },
-    verify() {
-      setTimeout(() => {
-        this.$refs.recaptcha.reset();
-      }, 1200);
+    verify(response) {
+        console.log(response)
+        this.captcha = true
+    //   setTimeout(() => {
+    //     this.$refs.recaptcha.reset();
+    //   }, 1200);
     },
     expired() {
       this.$refs.recaptcha.reset();
