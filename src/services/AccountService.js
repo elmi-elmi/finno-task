@@ -21,6 +21,6 @@ export default {
   },
   users(){
     console.log('================')
-    return apiClient.get('/users')
+    return apiClient.get('/users?delay=1')
   }
 };

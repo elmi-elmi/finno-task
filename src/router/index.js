@@ -38,17 +38,18 @@ const routes = [
 
   },
   {
-    path:'/:catchAll(.*)',
-    name:'notFound',
-    component:NotFoundView
-  },
-  {
     path:'/user/:id',
     name:'user',
     component:UserView,
     meta:{reqAuth:true},
     props:true
-  }
+  },
+  {
+    path:'/:catchAll(.*)',
+    name:'notFound',
+    component:NotFoundView
+  },
+
 ]
 
 const router = new VueRouter({

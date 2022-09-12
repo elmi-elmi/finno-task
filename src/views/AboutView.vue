@@ -1,7 +1,7 @@
 <template>
   <v-row class=" mt-2">
     <v-col class="d-flex justify-center aling-center">
-        <v-card min-width="600">
+        <v-card min-width="600" :loading="isLoading" >
     <v-list three-line>
       <template v-for="(item, index) in users" :kry="item.id" >
         <v-subheader
@@ -13,7 +13,7 @@
         ></v-divider>
         <v-list-item
         router
-        :to="{name:'user', params:{user:item, id:item.id}}"
+        :to="{name:'user', params:{id:item.id}}"
         >
           <v-list-item-avatar>
             <v-img :src="item.avatar"></v-img>
@@ -36,7 +36,7 @@
 export default{
   name:'Users',
   components:{UserInfo},
-  data(){return{users:{},header:'Users'}},
+  data(){return{users:{},header:'Users', isLoading:true}},
   created(){
       this.fetchUsers();
   },
@@ -46,6 +46,7 @@ export default{
       .then(()=>{
         const {data} = this.$store.state.usersList;
         this.users = data
+        this.isLoading= false;
         console.log(data)
 
       })
