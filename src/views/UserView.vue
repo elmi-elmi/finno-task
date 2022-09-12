@@ -3,6 +3,8 @@
       :firstName="user.first_name" 
       :lastName="user.last_name"
        :avatar="user.avatar"
+       :id="user.id"
+       :email="user.email"
        ></user-info>
 </template>
 
