@@ -5,6 +5,21 @@
       app
     >
       <!--  -->
+      <v-list-item
+          v-for="(link,index) in links"
+          :key="index"
+          router
+          :to="{name:link.to}"
+      >
+        <v-list-item-action>
+          <v-icon >
+            mdi-{{link.icon}}
+          </v-icon>
+        </v-list-item-action>
+        <v-list-item-content
+            
+        >{{link.content}}</v-list-item-content>
+      </v-list-item>
     </v-navigation-drawer>
  
 
@@ -37,7 +52,12 @@
 
 export default {
   name: 'App',
-  data: () => ({ drawer: null }),
+  data: () => ({ drawer: null
+  ,
+  links:[
+      {icon:'view-dashboard',content:'Dashboard', to:'home'},
+      {icon:'account',content:'Users', to:'about'},
+    ] }),
   components: {
   },
   methods: {
