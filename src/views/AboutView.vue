@@ -44,11 +44,15 @@ export default{
     fetchUsers(){
       this.$store.dispatch('fetchUsersList')
       .then(()=>{
+        console.log('aaaaa')
         const {data} = this.$store.state.usersList;
         this.users = data
         this.isLoading= false;
-        console.log(data)
 
+      })
+      .catch(e=>{
+        if(e.code === "ERR_NETWORK") this.$router.push({name:'networkError'})
+        else this.$router.push({name:{name:'notFound'}})
       })
     }
   }

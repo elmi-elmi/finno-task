@@ -6,6 +6,7 @@ import LoginView from '../views/LoginView.vue'
 import NotFoundView from '../views/NotFoundView.vue'
 import UserView from '../views/UserView.vue'
 import ChartView from '../views/ChartView.vue'
+import NetworkErrorView from '../views/NetworkErrorView.vue'
 
 Vue.use(VueRouter)
 
@@ -54,10 +55,25 @@ const routes = [
   
   },
   {
+    path:'/404/:resource',
+    name:'404Resource',
+    component:NotFoundView,
+    props:true,
+    meta:{reqAuth:true},
+  },
+  {
+    path:'/500',
+    name:'networkError',
+    component:NetworkErrorView,
+    meta:{reqAuth:true},
+
+  },
+  {
     path:'/:catchAll(.*)',
     name:'notFound',
-    component:NotFoundView
-  },
+    component:NotFoundView,
+    meta:{reqAuth:true},
+  }
 
 ]
 

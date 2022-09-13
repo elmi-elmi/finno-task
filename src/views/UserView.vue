@@ -31,7 +31,18 @@ export default {
     init() {
       if (!this.$store.state.usersList?.data) {
         //if user does not navigate from UsersView
-        this.$store.dispatch("fetchUsersList").then(this.getUser);
+        this.$store
+          .dispatch("fetchUsersList")
+          .then(this.getUser)
+          .catch((e) => {
+            if (e.code === "ERR_NETWORK")
+              this.$router.push({ name: "networkError" });
+            else
+              this.$router.push({
+                name: "404Resource",
+                params: { resource: this.$route.params.id },
+              });
+          });
       } else {
         this.getUser();
       }
@@ -40,6 +51,7 @@ export default {
       const users = this.$store.state.usersList.data;
       this.user = users.filter((u) => u.id == this.$route.params.id)[0];
       this.isLoading = false;
+      if(!this.user) throw Error()
     },
   },
 };

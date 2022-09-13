@@ -13,10 +13,9 @@ new Vue({
   store,
   vuetify,
   created(){
+    // auto login
     const userString = localStorage.getItem('user')
-    console.log(typeof userString)
     if(userString){
-      console.log('*****')
       const userData = JSON.parse(userString)
       this.$store.commit('SET_USER_DATA', userData)
     }

@@ -1,6 +1,5 @@
 import Vue from "vue";
 import Vuex from "vuex";
-
 import accountService from "@/services/AccountService";
 import cryptoService from "@/services/CryptoService";
 
@@ -41,27 +40,37 @@ export default new Vuex.Store({
       return accountService
         .register(credentials)
         .then(({ data }) => commit("SET_USER_DATA", data))
-        .catch(console.log); // TODO
+        .catch(e=>{
+          throw e
+        })
     },
     doLogin({ commit }, credentials) {
       return accountService
         .login(credentials)
         .then(({ data }) => commit("SET_USER_DATA", data))
-        .catch(console.log); // TODO
+        .catch(e=>{
+          throw e
+        })
     },
     doLogout({ commit }) {
       commit("CLEAR_USER_DATA");
     },
     fetchTableData({ commit }) {
-      return cryptoService.fetchCryptoData().then(({ data }) =>
+      return cryptoService.fetchCryptoData()
+      .then(({ data }) =>
         commit("SET_CRYPTO_DATA", data)
-      );
+      )
+      .catch(e=>{
+        throw e
+      })
     },
     fetchUsersList({commit}){
       return accountService.users()
       .then(({data})=>{
-        console.log('---->',data)
         commit('SET_USERS_LIST',data)
+      })
+      .catch(e=>{
+        throw e
       })
     }
   },

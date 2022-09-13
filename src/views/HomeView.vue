@@ -1,5 +1,5 @@
 <template>
-  <v-row class="fill-height" align='center'>
+  <v-row class="fill-height" align="center">
     <v-col class="d-flex justify-center">
       <v-card max-width="900">
         <v-card-title>
@@ -13,7 +13,12 @@
             hide-details
           ></v-text-field>
         </v-card-title>
-        <v-data-table :loading="isLoading" :headers="headers" :items="desserts" :search="search">
+        <v-data-table
+          :loading="isLoading"
+          :headers="headers"
+          :items="desserts"
+          :search="search"
+        >
           <template v-slot:item.usd_24h_change="{ item }">
             <div
               :class="{
@@ -31,18 +36,19 @@
                 'red--text': item.usd_24h_change < 0,
               }"
             >
-              {{ item.usd}} 
+              {{ item.usd }}
             </div>
           </template>
           <template v-slot:item.name="{ item }">
-            <router-link :to="{name:'chart', params:{coin:item.name}}" target="_blank">
-              <v-btn text >
-             
-             <v-icon  left>mdi-{{item.name}} </v-icon>
-               <span>{{ item.name}} </span>
-             </v-btn>
+            <router-link
+              :to="{ name: 'chart', params: { coin: item.name } }"
+              target="_blank"
+            >
+              <v-btn text>
+                <v-icon left>mdi-{{ item.name }} </v-icon>
+                <span>{{ item.name }} </span>
+              </v-btn>
             </router-link>
-            
           </template>
         </v-data-table>
       </v-card>
@@ -59,26 +65,32 @@ export default {
   },
   methods: {
     fetchTableData() {
-      this.$store.dispatch("fetchTableData").then(() => {
-        this.rawData = this.$store.state.cryptoData;
-        for (let i in this.rawData) {
-          console.log(i);
-          this.desserts.push({
-            name: i,
-            usd: this.rawData[i].usd,
-            usd_24h_change: this.rawData[i].usd_24h_change,
-            usd_24h_vol: (this.rawData[i].usd_24h_vol / 1000000).toFixed(2),
-          });
-        }
-        this.isLoading = false;
-      });
+      this.$store
+        .dispatch("fetchTableData")
+        .then(() => {
+          this.rawData = this.$store.state.cryptoData;
+          for (let i in this.rawData) {
+            this.desserts.push({
+              name: i,
+              usd: this.rawData[i].usd,
+              usd_24h_change: this.rawData[i].usd_24h_change,
+              usd_24h_vol: (this.rawData[i].usd_24h_vol / 1000000).toFixed(2),
+            });
+          }
+          this.isLoading = false;
+        })
+        .catch((e) => {
+          if (e.code === "ERR_NETWORK")
+            this.$router.push({ name: "networkError" });
+          else this.$router.push({ name: { name: "notFound" } });
+        });
     },
   },
 
   data() {
     return {
       search: "",
-      isLoading:true,
+      isLoading: true,
       rawData: null,
       headers: [
         {
