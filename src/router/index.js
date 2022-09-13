@@ -1,13 +1,14 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import RegisterView from '../views/RegisterView.vue'
-import LoginView from '../views/LoginView.vue'
-import NotFoundView from '../views/NotFoundView.vue'
-import UserView from '../views/UserView.vue'
-import ChartView from '../views/ChartView.vue'
-import NetworkErrorView from '../views/NetworkErrorView.vue'
 
+const UsersListView = () => import(/* webpackChunkName: "about" */ '../views/UsersListView.vue')
+const NetworkErrorView = () => import(/* webpackChunkName: "about" */ '../views/NetworkErrorView.vue')
+const ChartView = () => import(/* webpackChunkName: "about" */ '../views/ChartView.vue')
+const NotFoundView = () => import(/* webpackChunkName: "about" */ '../views/NotFoundView.vue')
+const LoginView = () => import(/* webpackChunkName: "about" */ '../views/LoginView.vue')
+const RegisterView = () => import(/* webpackChunkName: "about" */ '../views/RegisterView.vue')
+const HomeView = () => import(/* webpackChunkName: "about" */ '../views/HomeView.vue')
+const UserView = () => import(/* webpackChunkName: "about" */ '../views/UserView.vue')
 Vue.use(VueRouter)
 
 const routes = [
@@ -35,7 +36,7 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue'),
+    component: UsersListView,
     meta:{reqAuth:true}
 
   },
