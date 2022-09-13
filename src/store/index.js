@@ -9,7 +9,8 @@ export default new Vuex.Store({
   state: {
     user: null,
     cryptoData: null,
-    usersList:null
+    usersList:null,
+    snackContent:null
   },
   getters: {
     userLoggedIn(state) {
@@ -27,16 +28,17 @@ export default new Vuex.Store({
       location.reload();
     },
     SET_CRYPTO_DATA(state, cryptoData) {
-      console.log(cryptoData);
       state.cryptoData = cryptoData;
     },
     SET_USERS_LIST(state,usersList){
       state.usersList = usersList
+    },
+    SET_SNACK_CONTENT(state, content){
+        state.snackContent = content
     }
   },
   actions: {
     doRegister({ commit }, credentials) {
-      console.log("---?", credentials);
       return accountService
         .register(credentials)
         .then(({ data }) => commit("SET_USER_DATA", data))
@@ -72,6 +74,9 @@ export default new Vuex.Store({
       .catch(e=>{
         throw e
       })
+    },
+    snackBarContent({commit},content){
+      commit('SET_SNACK_CONTENT',content)
     }
   },
 

@@ -33,7 +33,8 @@
               @expired="expired"
             ></vue-recaptcha>
           </v-card>
-          <v-btn :disabled="$v.$invalid ||!captcha" class="mr-4" @click="submit"> Login </v-btn>
+          <v-btn  class="mr-4" @click="submit"> Login </v-btn>
+          <!-- <v-btn :disabled="$v.$invalid ||!captcha" class="mr-4" @click="submit"> Login </v-btn> -->
           <v-btn @click="clear"> clear </v-btn>
         </form>
         <v-row class="ma-4"> <span>Don't you have an account? &nbsp;</span>
@@ -103,7 +104,9 @@ export default {
       !this.$v.password.required && errors.push("Password is required.");
       return errors;
     },
+
   },
+
 
   methods: {
     
@@ -117,8 +120,8 @@ export default {
       }
       )
       .then(()=>this.$router.push('/about'))
-      .catch(()=>{
-        
+      .catch((e)=>{
+        this.$store.dispatch('snackBarContent', e.message)
       })
     },
     clear() {

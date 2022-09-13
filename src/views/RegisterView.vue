@@ -51,7 +51,7 @@
             ></vue-recaptcha>
           </v-card>
           <v-btn
-            :disabled="$v.$invalid || !captcha"
+            
             class="mr-4"
             @click="submit"
           >
@@ -147,8 +147,8 @@ export default {
       }
       )
       .then(()=>this.$router.push('/about'))
-      .catch(()=>{
-        
+      .catch((e)=>{
+        this.$store.dispatch('snackBarContent', e.message)
       })
     },
     clear() {
