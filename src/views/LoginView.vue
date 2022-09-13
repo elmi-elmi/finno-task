@@ -34,7 +34,7 @@
             ></vue-recaptcha>
           </v-card>
           <!-- <v-btn  class="mr-4" @click="submit"> Login </v-btn> -->
-          <v-btn :disabled="$v.$invalid ||!captcha" class="mr-4" @click="submit"> Login </v-btn>
+          <v-btn :disabled="$v.$invalid ||!isCaptchaVerified" class="mr-4" @click="submit"> Login </v-btn>
           <v-btn @click="clear"> clear </v-btn>
         </form>
         <v-row class="ma-4"> <span>Don't you have an account? &nbsp;</span>
@@ -47,6 +47,12 @@
   </v-container>
 </template>
 <script>
+
+   /**
+ * Login page
+ *
+ * @author Shahrokh elmi
+ */
 import VueRecaptcha from "vue-recaptcha";
 
 import { validationMixin } from "vuelidate";
@@ -71,7 +77,7 @@ export default {
   data: () => ({
     email: "",
     password: null,
-    captcha:false,
+    isCaptchaVerified:false,
     sitekey:'6LdLcu0hAAAAAIGW_yfuLWmRKCk4jKhlYeuSywS-'
 
   }),
@@ -134,13 +140,12 @@ export default {
       this.email = "";
       this.checkbox = false;
     },
-    verify(response) {
-        console.log(response)
-        this.captcha = true
-
+    verify() {
+        this.isCaptchaVerified = true
     },
     expired() {
       this.$refs.recaptcha.reset();
+      this.isCaptchaVerified = false;
 
     },
   },

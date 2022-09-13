@@ -17,6 +17,12 @@
 </template>
 
 <script>
+    /**
+ * user page
+ * show all info about a user
+ *
+ * @author Shahrokh elmi
+ */
 import UserInfo from "@/components/UserInfo.vue";
 export default {
   name: "UserView",

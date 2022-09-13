@@ -20,7 +20,6 @@ export default new Vuex.Store({
   mutations: {
     SET_USER_DATA(state, userData) {
       state.user = userData;
-      console.log("useeeeee", state.user);
       localStorage.setItem("user", JSON.stringify(userData));
       accountService.saveAuthHeader(userData.token);
     },

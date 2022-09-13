@@ -51,7 +51,7 @@
             ></vue-recaptcha>
           </v-card>
           <v-btn
-            :disabled="$v.$invalid || !captcha"
+            :disabled="$v.$invalid || !isCaptchaVerified"
             class="mr-4"
             @click="submit"
           >
@@ -68,6 +68,11 @@
   </v-container>
 </template>
 <script>
+    /**
+ * Register page
+ *
+ * @author Shahrokh elmi
+ */
 import VueRecaptcha from "vue-recaptcha";
 
 import { validationMixin } from "vuelidate";
@@ -101,7 +106,7 @@ export default {
     email: "",
     checkbox: false,
     password: null,
-    captcha: false,
+    isCaptchaVerified: false,
     sitekey:'6LdLcu0hAAAAAIGW_yfuLWmRKCk4jKhlYeuSywS-'
   }),
 
@@ -162,14 +167,14 @@ export default {
       this.checkbox = false;
     },
     verify(response) {
-      this.captcha = true;
+      this.isCaptchaVerified = true;
       // setTimeout(() => {
       //   this.$refs.recaptcha.reset();
       // }, 1200);
     },
     expired() {
       this.$refs.recaptcha.reset();
-      this.captcha = false;
+      this.isCaptchaVerified = false;
     },
   },
 };

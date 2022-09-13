@@ -27,7 +27,6 @@ export default {
   },
   watch: {
     snackBarContent(neee) {
-      console.log("newww", neee);
       this.text = this.$store.state.snackContent;
       this.snackbar = true;
       setTimeout(() => {
