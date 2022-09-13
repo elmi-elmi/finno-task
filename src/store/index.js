@@ -9,8 +9,8 @@ export default new Vuex.Store({
   state: {
     user: null,
     cryptoData: null,
-    usersList:null,
-    snackContent:null
+    usersList: null,
+    snackContent: null,
   },
   getters: {
     userLoggedIn(state) {
@@ -20,6 +20,7 @@ export default new Vuex.Store({
   mutations: {
     SET_USER_DATA(state, userData) {
       state.user = userData;
+      console.log("useeeeee", state.user);
       localStorage.setItem("user", JSON.stringify(userData));
       accountService.saveAuthHeader(userData.token);
     },
@@ -30,54 +31,54 @@ export default new Vuex.Store({
     SET_CRYPTO_DATA(state, cryptoData) {
       state.cryptoData = cryptoData;
     },
-    SET_USERS_LIST(state,usersList){
-      state.usersList = usersList
+    SET_USERS_LIST(state, usersList) {
+      state.usersList = usersList;
     },
-    SET_SNACK_CONTENT(state, content){
-        state.snackContent = content
-    }
+    SET_SNACK_CONTENT(state, content) {
+      state.snackContent = content;
+    },
   },
   actions: {
     doRegister({ commit }, credentials) {
       return accountService
         .register(credentials)
         .then(({ data }) => commit("SET_USER_DATA", data))
-        .catch(e=>{
-          throw e
-        })
+        .catch((e) => {
+          throw e;
+        });
     },
     doLogin({ commit }, credentials) {
       return accountService
         .login(credentials)
         .then(({ data }) => commit("SET_USER_DATA", data))
-        .catch(e=>{
-          throw e
-        })
+        .catch((e) => {
+          throw e;
+        });
     },
     doLogout({ commit }) {
       commit("CLEAR_USER_DATA");
     },
     fetchTableData({ commit }) {
-      return cryptoService.fetchCryptoData()
-      .then(({ data }) =>
-        commit("SET_CRYPTO_DATA", data)
-      )
-      .catch(e=>{
-        throw e
-      })
+      return cryptoService
+        .fetchCryptoData()
+        .then(({ data }) => commit("SET_CRYPTO_DATA", data))
+        .catch((e) => {
+          throw e;
+        });
     },
-    fetchUsersList({commit}){
-      return accountService.users()
-      .then(({data})=>{
-        commit('SET_USERS_LIST',data)
-      })
-      .catch(e=>{
-        throw e
-      })
+    fetchUsersList({ commit }) {
+      return accountService
+        .users()
+        .then(({ data }) => {
+          commit("SET_USERS_LIST", data);
+        })
+        .catch((e) => {
+          throw e;
+        });
     },
-    snackBarContent({commit},content){
-      commit('SET_SNACK_CONTENT',content)
-    }
+    snackBarContent({ commit }, content) {
+      commit("SET_SNACK_CONTENT", content);
+    },
   },
 
   modules: {},

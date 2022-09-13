@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="mt-10">
     <v-row justify="center">
       <v-col class="d-flex flex-column justify-center align-center">
           <form>
@@ -28,13 +28,13 @@
             <vue-recaptcha
               ref="recaptcha"
               :loadRecaptchaScript="true"
-              sitekey="6LdLcu0hAAAAAIGW_yfuLWmRKCk4jKhlYeuSywS-"
+              :sitekey="sitekey"
               @verify="verify"
               @expired="expired"
             ></vue-recaptcha>
           </v-card>
-          <v-btn  class="mr-4" @click="submit"> Login </v-btn>
-          <!-- <v-btn :disabled="$v.$invalid ||!captcha" class="mr-4" @click="submit"> Login </v-btn> -->
+          <!-- <v-btn  class="mr-4" @click="submit"> Login </v-btn> -->
+          <v-btn :disabled="$v.$invalid ||!captcha" class="mr-4" @click="submit"> Login </v-btn>
           <v-btn @click="clear"> clear </v-btn>
         </form>
         <v-row class="ma-4"> <span>Don't you have an account? &nbsp;</span>
@@ -71,7 +71,9 @@ export default {
   data: () => ({
     email: "",
     password: null,
-    captcha:true
+    captcha:false,
+    sitekey:'6LdLcu0hAAAAAIGW_yfuLWmRKCk4jKhlYeuSywS-'
+
   }),
 
   computed: {
@@ -119,9 +121,10 @@ export default {
         password:this.password
       }
       )
-      .then(()=>this.$router.push('/about'))
+      .then(()=>this.$router.push('/'))
       .catch((e)=>{
         this.$store.dispatch('snackBarContent', e.message)
+        this.expired();
       })
     },
     clear() {
@@ -134,12 +137,11 @@ export default {
     verify(response) {
         console.log(response)
         this.captcha = true
-    //   setTimeout(() => {
-    //     this.$refs.recaptcha.reset();
-    //   }, 1200);
+
     },
     expired() {
       this.$refs.recaptcha.reset();
+
     },
   },
 };

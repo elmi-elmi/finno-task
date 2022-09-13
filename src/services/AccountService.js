@@ -13,14 +13,14 @@ export default {
     return apiClient.post("/register", credentials);
   },
   login(credentials) {
-    console.log('service', credentials)
+    console.log("service", credentials);
     return apiClient.post("/login", credentials);
   },
-  saveAuthHeader(token){
-    apiClient.defaults.headers.common['Authorization'] = `Bearer ${token}`
+  saveAuthHeader(token) {
+    apiClient.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   },
-  users(){
-    console.log('================')
-    return apiClient.get('/users?delay=1')
-  }
+  users() {
+    console.log("================");
+    return apiClient.get("/users?delay=1");
+  },
 };
