@@ -11,7 +11,6 @@
             :error-messages="nameErrors"
             :counter="10"
             label="Name"
-            required
             @input="$v.name.$touch()"
             @blur="$v.name.$touch()"
           ></v-text-field>
@@ -76,6 +75,7 @@
 import VueRecaptcha from "vue-recaptcha";
 
 import { validationMixin } from "vuelidate";
+import {captchaEvent} from '@/mixins/captchaEvent'
 import {
   required,
   maxLength,
@@ -84,7 +84,7 @@ import {
 } from "vuelidate/lib/validators";
 
 export default {
-  mixins: [validationMixin],
+  mixins: [validationMixin, captchaEvent],
   name: "Register",
   components: {
     VueRecaptcha,
@@ -106,7 +106,6 @@ export default {
     email: "",
     checkbox: false,
     password: null,
-    isCaptchaVerified: false,
     sitekey:'6LdLcu0hAAAAAIGW_yfuLWmRKCk4jKhlYeuSywS-'
   }),
 
@@ -152,7 +151,11 @@ export default {
         password:this.password
       }
       )
-      .then(()=>this.$router.push('/'))
+      .then(()=>{
+        this.$router.push('/')
+        this.$store.dispatch('snackBarContent','Register successfull')
+
+      })
       .catch((e)=>{
         this.$store.dispatch('snackBarContent', e.message)
         this.expired()
@@ -166,16 +169,7 @@ export default {
       this.select = null;
       this.checkbox = false;
     },
-    verify(response) {
-      this.isCaptchaVerified = true;
-      // setTimeout(() => {
-      //   this.$refs.recaptcha.reset();
-      // }, 1200);
-    },
-    expired() {
-      this.$refs.recaptcha.reset();
-      this.isCaptchaVerified = false;
-    },
+  
   },
 };
 </script>

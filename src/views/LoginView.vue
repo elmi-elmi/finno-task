@@ -56,6 +56,7 @@
 import VueRecaptcha from "vue-recaptcha";
 
 import { validationMixin } from "vuelidate";
+import {captchaEvent} from '@/mixins/captchaEvent'
 import {
   required,
   email,
@@ -63,7 +64,7 @@ import {
 } from "vuelidate/lib/validators";
 
 export default {
-  mixins: [validationMixin],
+  mixins: [validationMixin,captchaEvent ],
   name: "Login",
   components: {
     VueRecaptcha,
@@ -77,7 +78,6 @@ export default {
   data: () => ({
     email: "",
     password: null,
-    isCaptchaVerified:false,
     sitekey:'6LdLcu0hAAAAAIGW_yfuLWmRKCk4jKhlYeuSywS-'
 
   }),
@@ -127,7 +127,11 @@ export default {
         password:this.password
       }
       )
-      .then(()=>this.$router.push('/'))
+      .then(()=>{
+
+        this.$router.push('/')
+        this.$store.dispatch('snackBarContent','Login successfull')
+      })
       .catch((e)=>{
         this.$store.dispatch('snackBarContent', e.message)
         this.expired();
@@ -140,14 +144,7 @@ export default {
       this.email = "";
       this.checkbox = false;
     },
-    verify() {
-        this.isCaptchaVerified = true
-    },
-    expired() {
-      this.$refs.recaptcha.reset();
-      this.isCaptchaVerified = false;
-
-    },
+  
   },
 };
 </script>

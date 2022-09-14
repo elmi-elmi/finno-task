@@ -7,6 +7,7 @@
         <router-view></router-view>
       </transition>
     </v-main>
+    <AppFooter/>
     <SnackBar/>
   </v-app>
 </template>
@@ -19,13 +20,15 @@
  */
 import AppBar from "./components/AppBar.vue";
 import SnackBar from "./components/SnackBar.vue";
+import AppFooter from "./components/AppFooter.vue";
 export default {
   name: "App",
 
   components: {
     AppBar,
-    SnackBar
-  },
+    SnackBar,
+    AppFooter,
+},
   methods: {},
 };
 </script>

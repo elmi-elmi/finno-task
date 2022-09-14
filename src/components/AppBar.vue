@@ -2,6 +2,12 @@
   <div>
     <v-navigation-drawer v-model="drawer" app>
       <!--  -->
+      <v-col class="d-flex flex-column align-center">
+        <v-avatar size="100" >
+          <img src="@/assets/av.jpg" style="height: 100%;width:auto" >
+        </v-avatar>
+        <a class="mt-2 grey--text" href="https://github.com/elmi-elmi">elmi-elmi</a>
+      </v-col>
       <v-list-item
         v-for="(link, index) in links"
         :key="index"
