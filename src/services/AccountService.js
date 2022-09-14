@@ -15,10 +15,8 @@ export default {
   login(credentials) {
     return apiClient.post("/login", credentials);
   },
-  saveAuthHeader(token) {
-    apiClient.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-  },
+
   users() {
-    return apiClient.get("/users?delay=1");
+    return apiClient.get("/users?delay=3");
   },
 };
