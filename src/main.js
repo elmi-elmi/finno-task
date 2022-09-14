@@ -5,7 +5,6 @@ import store from './store'
 import vuetify from './plugins/vuetify'
 import Vuelidate from 'vuelidate'
 import axios from 'axios'
-import i18n from './includes/i18n';
 import 'nprogress/nprogress.css'
 import ProgressBar from './includes/progress-bar.js';
 Vue.use(Vuelidate)
@@ -15,7 +14,6 @@ new Vue({
   router,
   store,
   vuetify,
-  i18n,
   created(){
     // auto login
     const userString = localStorage.getItem('user')
